@@ -4,7 +4,7 @@ require('dotenv').config();
 const { connectToServer } = require('./utils/dbConnect');
 const app = express();
 const port = process.env.PORT || 5001;
-const usersApi = require('./routes/v1/users.routes.js');
+const appApi = require('./routes/v1/users.routes.js');
 
 
 app.use(cors());
@@ -24,7 +24,7 @@ connectToServer((err)=>{
 
 
 
-app.use('/api/v1/app/user',usersApi);
+app.use('/api/v1/app/user',appApi);
 
 app.all('*',(req,res)=>{
     res.send("The requested route cannot be found!");
