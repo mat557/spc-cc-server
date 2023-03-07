@@ -30,8 +30,7 @@ module.exports.deleteSingleCourse = async(req,res) =>{
         const db = getDb();
         const query = {_id : ObjectId(id)};
         const result = await db.collection('courses').deleteOne(query);
-        res.json({ result , "message":"The requested course was deleted successfully!" });
-        
+        res.json({ result , "message":"The requested course was deleted successfully!" }); 
     }catch(err){
         console.log("The error",err);
     }
