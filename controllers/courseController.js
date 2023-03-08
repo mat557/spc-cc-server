@@ -24,6 +24,19 @@ module.exports.getAllCourses = async(req,res) =>{
 }
 
 
+module.exports.getSingleCourse = async(req,res) =>{
+    try{
+        const db = getDb();
+        const id = req.params.id;
+        const query = {_id : ObjectId(id)};
+        const result = await db.collection('courses').findOne(query);
+        res.json(result);
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
 module.exports.deleteSingleCourse = async(req,res) =>{
     try{
         const id = req.params.id;

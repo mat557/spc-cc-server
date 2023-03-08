@@ -8,6 +8,7 @@ const courseController = require('../../controllers/courseController.js');
 router.route('/').get(usersControllers.getAllUsers)
 router.route('/:email').get(usersControllers.getSingleUser)
 router.route('/courses/all').get(courseController.getAllCourses)
+router.route('/course/find/:id').get(courseController.getSingleCourse)
 
 
 
