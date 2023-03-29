@@ -48,3 +48,21 @@ module.exports.deleteSingleCourse = async(req,res) =>{
         console.log("The error",err);
     }
 }
+
+
+module.exports.updateSingleCourse = async(req,res) =>{
+    try{
+        const db = getDb();
+        const id = req.params.id;
+        const query = {_id : ObjectId(id)};
+        const options = { upsert: true };
+        const data = req.body;
+        const updateDoc = {
+            $set: data,
+        };
+        const result = await db.collection('courses').updateOne(query, updateDoc, options);
+        res.json(result);
+    }catch(err){
+        console.log(err)
+    }
+}

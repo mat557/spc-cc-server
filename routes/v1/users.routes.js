@@ -16,10 +16,14 @@ router.route('/course/find/:id').get(courseController.getSingleCourse)
 
 router.route('/addUser').put(usersControllers.putSingleUser)
 router.route('/addCourse').put(courseController.putSingleCourse)
+router.route('/update/course/:id').put(courseController.updateSingleCourse)
 
 
 // all delete request
 
 router.route('/delete/post/:id').delete(courseController.deleteSingleCourse)
+
+// all delete request
+
 
 module.exports =  router;
