@@ -16,7 +16,7 @@ router.route('/course/find/:id').get(courseController.getSingleCourse)
 
 router.route('/addUser').put(usersControllers.putSingleUser)
 router.route('/addCourse').put(courseController.putSingleCourse)
-// router.route('/update/course/:id').put(courseController.updateSingleCourse)
+router.route('/update/course/:id').put(courseController.updateSingleCourse)
 
 
 // all delete request
