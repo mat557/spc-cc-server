@@ -66,3 +66,21 @@ module.exports.updateSingleCourse = async(req,res) =>{
         console.log(err)
     }
 }
+
+
+module.exports.enroleCourse = async(req,res) =>{
+    try{
+        const db = getDb();
+        const email = req.params.email;
+        const id = req.body.id;
+        const query = { email : email }
+        const updateDoc = {
+            $push : id,
+            $set :{role : "student"}
+        }
+        const result = await db.collection('users').updateOne(query,updateDoc)
+        res.json(result)
+    }catch(err){
+        console.log(err);
+    }
+}
