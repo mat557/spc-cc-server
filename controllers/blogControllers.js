@@ -38,3 +38,20 @@ module.exports.deleteSingleBlog = async(req,res) =>{
         console.log(err);
     }
 }
+
+
+module.exports.updateSingleBlog = async(req,res) =>{
+    try{
+        const db = getDb();
+        const id = req.params.id;
+        const query = {_id : ObjectId(id)};
+        const data = req.body;
+        const updateDoc = {
+            $set: data,
+        };
+        const result = await db.collection('blogs').findOneAndUpdate(query, updateDoc);
+        res.json(result);
+    }catch(err){
+        console.log(err)
+    }
+}

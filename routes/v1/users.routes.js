@@ -29,6 +29,7 @@ router.route('/delete/blog/:id').delete(blogController.deleteSingleBlog)
 
 router.route('/course/enrole/:email').post(courseController.enroleCourse)
 router.route('/blog/post').post(blogController.postSingleBlog)
+router.route('/update/blog/:id').patch(blogController.updateSingleBlog)
 
 
 module.exports =  router;
