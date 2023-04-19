@@ -13,6 +13,21 @@ module.exports.getAllBlogs = async(req,res) =>{
 }
 
 
+
+module.exports.getSingleBlogs = async(req,res) =>{
+    try{
+        const db = getDb();
+        const id = req.params.id;
+        const query = { _id : ObjectId(id)};
+        const result = await db.collection('blogs').findOne(query);
+        res.json(result); 
+    }catch(err){
+        res.send(err);
+    }
+}
+
+
+
 module.exports.postSingleBlog = async(req,res) =>{
     try{
         const db = getDb();
@@ -53,5 +68,47 @@ module.exports.updateSingleBlog = async(req,res) =>{
         res.json(result);
     }catch(err){
         console.log(err)
+    }
+}
+
+
+
+module.exports.getBlogReactResponse = async(req,res) =>{
+    try{
+        const db = getDb();
+        const email = req.params.email;
+        const id = req.params.id;
+        console.log(id,email)
+        const query = {_id : ObjectId(id)};
+        const updateDoc = {
+            $push: {like : email},
+        };
+        const result = await db.collection('blogs').updateOne(query,updateDoc);
+        res.json(result)
+
+
+        // const exist = await db.collection('blogs').findOne({
+        //     $and: [
+        //         { _id   : ObjectId(id) },
+        //         { like  : email }
+        //     ]
+        // });
+
+        // res.json(exist)
+        // if(!exist){
+        //     const updateDoc = {
+        //         $push : {like : email }
+        //     }
+        //     const query = {
+        //         _id : ObjectId(id)
+        //     }
+        //     const result = await db.collection('users').updateOne(query,updateDoc)
+
+        //     res.json(json,"true")
+        // }else{
+        //     res.json("not found","false")
+        // }
+    }catch(err){
+        res.send(err);
     }
 }

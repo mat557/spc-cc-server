@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { getDb } = require("../utils/dbConnect");
 
 module.exports.getAllUsers = async(req,res) =>{
@@ -35,3 +36,17 @@ module.exports.putSingleUser = async(req,res) =>{
     }
 }
 
+module.exports.promoteUserBLog = async(req,res) =>{
+    try{
+        const db = getDb();
+        const email = req.params.email;
+        const query = { email : email }
+        const updateDoc = {
+            $push : {role : "blogger"}
+        }
+        const result = await db.collection('users').updateOne(query , updateDoc )
+        res.json(result)
+    }catch(err){
+        console.log(err);
+    }
+}

@@ -78,7 +78,7 @@ module.exports.enroleCourse = async(req,res) =>{
             $push : id,
             $set :{role : "student"}
         }
-        const result = await db.collection('users').updateOne(query,updateDoc)
+        const result = await db.collection('users').updateOne(query , updateDoc , { upsert : true })
         res.json(result)
     }catch(err){
         console.log(err);
