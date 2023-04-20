@@ -87,14 +87,14 @@ module.exports.enroleCourse = async(req,res) =>{
         if(count === 0){
             updateDoc = {
                 $push: {
-                    id: id,
+                    id,
                     role: "student"
                 }
             }
         } else {
             updateDoc = {
                 $push : {
-                    id: id
+                    id
                 }
             }
         }
