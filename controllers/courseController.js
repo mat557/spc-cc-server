@@ -82,7 +82,7 @@ module.exports.enroleCourse = async(req,res) =>{
                 count++;
             }
         }
-        console.log(count)
+        
         if(count === 0){
             updateDoc = {
                 $push: {
