@@ -73,11 +73,29 @@ module.exports.enroleCourse = async(req,res) =>{
         const db = getDb();
         const email = req.params.email;
         const id = req.body.id;
-        const query = { email : email }
-        const updateDoc = {
-            $push : id,
+        const query = { email : email };
+        const user = await db.collection('users').findOne(query);
+        let updateDoc = {};
+
+        for(let i = 0 ; i < user.role.length ; i++){
+            if(user.role == "student"){
+                count++;
+            }
         }
-        const result = await db.collection('users').updateOne(query , updateDoc , { upsert : true })
+        console.log(count)
+        if(count === 0){
+            updateDoc = {
+                $push: {
+                    id: id,
+                    role: "student"
+                  }
+            }
+        }else{
+            updateDoc = {
+                $push : id,
+            }
+        }
+        const result = await db.collection('users').updateOne(query , updateDoc )
         res.json(result)
     }catch(err){
         console.log(err);

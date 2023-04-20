@@ -29,7 +29,14 @@ module.exports.putSingleUser = async(req,res) =>{
     try{
         const db = getDb();
         const data = req.body;
-        const result = await db.collection('users').insertOne(data);
+        const newData = {
+            email  :  data.email,
+            number : data.number,
+            name   : data.name,
+            id     : [],
+            role   : []
+          };
+        const result = await db.collection('users').insertOne(newData);
         res.send(result);
     }catch(err){
         console.log(err.message)
