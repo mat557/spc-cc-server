@@ -76,7 +76,7 @@ module.exports.enroleCourse = async(req,res) =>{
         const query = { email : email };
         const user = await db.collection('users').findOne(query);
         let updateDoc = {};
-
+        let count = 0;
         for(let i = 0 ; i < user.role.length ; i++){
             if(user.role == "student"){
                 count++;
