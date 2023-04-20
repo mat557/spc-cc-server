@@ -75,6 +75,7 @@ module.exports.enroleCourse = async(req,res) =>{
         const id = req.body.id;
         const query = { email : email };
         const user = await db.collection('users').findOne(query);
+        console.log(id)
         let updateDoc = {};
         let count = 0;
         for(let i = 0 ; i < user.role.length ; i++){
