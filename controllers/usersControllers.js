@@ -33,7 +33,7 @@ module.exports.putSingleUser = async(req,res) =>{
             email  :  data.email,
             number : data.number,
             name   : data.name,
-            id     : [],
+            // id     : [],
             role   : []
           };
         const result = await db.collection('users').insertOne(newData);
