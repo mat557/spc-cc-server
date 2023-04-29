@@ -29,8 +29,12 @@ module.exports.getSingleCourse = async(req,res) =>{
         const db = getDb();
         const id = req.params.id;
         const query = {_id : ObjectId(id)};
-        const result = await db.collection('courses').findOne(query);
-        res.json(result);
+        if(id){
+            const result = await db.collection('courses').findOne(query);
+            res.json(result);
+        }else{
+            res.json("Nothing found with this id");
+        }
     }catch(err){
         console.log(err);
     }
@@ -105,37 +109,3 @@ module.exports.enroleCourse = async(req,res) =>{
 }
 
 
-
-// module.exports.enroleCourse = async(req,res) =>{
-//     try{
-//         const db = getDb();
-//         const email = req.params.email;
-//         const id = req.body.id;
-//         const query = { email : email };
-//         const user = await db.collection('users').findOne(query);
-//         let updateDoc = {};
-//         let count = 0;
-//         for(let i = 0 ; i < user.role.length ; i++){
-//             if(user.role == "student"){
-//                 count++;
-//             }
-//         }
-        
-//         if(count === 0){
-//             updateDoc = {
-//                 $push: {
-//                     id : id,
-//                     role: "student"
-//                   }
-//             }
-//         }else{
-//             updateDoc = {
-//                 $push : id,
-//             }
-//         }
-//         const result = await db.collection('users').updateOne(query , updateDoc )
-//         res.json(result)
-//     }catch(err){
-//         console.log(err);
-//     }
-// }
