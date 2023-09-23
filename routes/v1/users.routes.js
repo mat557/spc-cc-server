@@ -24,7 +24,8 @@ router.route('/count/comment/:id').get(blogController.getCommnetCount)  //for fe
 router.route('/question/feed').get(blogController.getFeedItem)  //for feed
 router.route('/reply/question/:id').get(blogController.getFeedReply)  //for feed
 
-
+router.route('/comment/getcomment/:page').get(usersControllers.getUserComments)
+router.route('/comment/count').get(usersControllers.countCommentNumber)
 
 
 // all put request
@@ -40,9 +41,9 @@ router.route('/response/react/:email/:id').put(blogController.getBlogReactRespon
 
 // all delete request
 
-router.route('/delete/post/:id').delete(courseController.deleteSingleCourse)
+router.route('/delete/post/:id').delete(courseController.deleteSingleCourse)//course
 
-router.route('/delete/blog/:id').delete(blogController.deleteSingleBlog)
+router.route('/delete/blog/:id').delete(blogController.deleteSingleBlog) //blog
 
 //all post request 
 
@@ -58,6 +59,8 @@ router.route('/feed/answer/:id').post(blogController.likeSingleQuestion) //for f
 router.route('/promote/blogger/:email').post(usersControllers.promoteUserBLog)
 router.route('/insert/course/mark/:id/:length').post(usersControllers.postStudentExamsMarks)
 
+
+router.route('/comment').post(usersControllers.addUserComment)
 
 //all patch request 
 

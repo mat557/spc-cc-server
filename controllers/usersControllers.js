@@ -35,12 +35,64 @@ module.exports.putSingleUser = async(req,res) =>{
             name   :  data.name,
             id     :  [],
             role   :  [],
-            marks  :  []
+            marks  :  {}
           };
         const result = await db.collection('users').insertOne(newData);
         res.send(result);
     }catch(err){
         console.log(err.message)
+    }
+}
+
+module.exports.countCommentNumber = async(req,res) =>{
+    try{
+        const db = getDb()
+        const result = await db.collection('rattings').estimatedDocumentCount()
+        
+        res.json(result)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+module.exports.getUserComments = async(req,res) => {
+    try{
+        const db = getDb();
+        const { page } = req.params 
+
+        const size = 3
+        // console.log(parseInt(page))
+        let newVal = (parseInt(page))*size < 0 ? 0 : (parseInt(page))*size
+        const skip = newVal
+
+        // console.log(skip)
+        
+        const result = await db.collection('ratings').find({}).skip(skip).limit(size).toArray()
+        
+        // console.log(result)
+        res.status(200).json(result) 
+    }catch(err){
+        console.log(err)
+    }
+}
+
+module.exports.addUserComment = async(req,res) => {
+    try{
+        const db = getDb()
+        const { email , ratings , name , cmnt , role} = req.body
+        const comment = {
+            email : email,
+            name : name,
+            role : role,
+            ratings : ratings,
+            cmnt : cmnt,
+        }
+        // console.log(req.body)
+        const result  = await db.collection('ratings').insertOne(comment)
+        // console.log(result)
+        res.status(200).json(result)
+    }catch(err){
+        console.log(err)
     }
 }
 
@@ -50,7 +102,9 @@ module.exports.promoteUserBLog = async(req,res) =>{
         const email = req.params.email;
         const query = { email : email }
         const updateDoc = {
-            $push : {role : "blogger"}
+            $push : {
+                role : "blogger"
+            }
         }
         const result = await db.collection('users').updateOne(query , updateDoc )
         res.json(result)
@@ -85,6 +139,8 @@ module.exports.getEnrolledStudentByCourse = async(req,res) =>{
             let i;
             let n = -1 , count = 0; 
 
+            // console.log(values)
+
             for (const property in values) {
                 for(i = 0 ; i < length ; i++){
                     if(property[5] == i){  
@@ -95,7 +151,7 @@ module.exports.getEnrolledStudentByCourse = async(req,res) =>{
                             'total' : Number(values[`cq_m-${i}`]) + Number(values[`mcqm-${i}`]),
                             'max'   : 40
                         } 
-                        
+                        console.log(recievedValues)
                         const updateDoc = {
                                 $push :{
                                     [`marks.${id}`] :recievedValues

@@ -130,17 +130,17 @@ module.exports.getCountPageItem = async(req,res) =>{
 module.exports.getCommnetCount = async(req,res) =>{
     try{
         const db = getDb();
-    const id = req.params.id;
-    const query = { _id: ObjectId(id) };
-    const result = await db.collection('feed')
-      .find(query)
-      .project({ comment: 1 })
-      .toArray();
-    if (!result.length) {
-      return res.status(404).json({ message: 'Feed not found' });
-    }
-    const commentCount = result[0].comment.length;
-    res.json( commentCount );
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const result = await db.collection('feed')
+        .find(query)
+        .project({ comment: 1 })
+        .toArray();
+        if (!result.length) {
+        return res.status(404).json({ message: 'Feed not found' });
+        }
+        const commentCount = result[0].comment.length;
+        res.json( commentCount );
     }catch(err){
         res.send(err);
     }
