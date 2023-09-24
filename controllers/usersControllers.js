@@ -47,8 +47,9 @@ module.exports.putSingleUser = async(req,res) =>{
 module.exports.countCommentNumber = async(req,res) =>{
     try{
         const db = getDb()
-        const result = await db.collection('rattings').estimatedDocumentCount()
+        const result = await db.collection('ratings').estimatedDocumentCount()
         
+        // console.log(result)
         res.json(result)
     }catch(err){
         console.log(err)
@@ -151,7 +152,7 @@ module.exports.getEnrolledStudentByCourse = async(req,res) =>{
                             'total' : Number(values[`cq_m-${i}`]) + Number(values[`mcqm-${i}`]),
                             'max'   : 40
                         } 
-                        console.log(recievedValues)
+                        
                         const updateDoc = {
                                 $push :{
                                     [`marks.${id}`] :recievedValues
